@@ -22,6 +22,7 @@ Example:
 <link rel="import" href="../../iron-pages/iron-pages.html">
 <link rel="import" href="create-ad-details-tab.html">
 <link rel="import" href="create-ad-media-tab.html">
+<link rel="import" href="create-ad-action-tab.html">
 <dom-module id="create-ad">
     <template>
         <style include="iron-flex"></style>
@@ -45,15 +46,17 @@ Example:
             </page-header>
             <div class="page-content">
                 <t-tabs class="header-tabs" selected="{{selectedTab}}" noink alignment="center">
+                    <t-tab >Action</t-tab>
                     <t-tab>Media</t-tab>
                     <t-tab>Details</t-tab>
-                    <t-tab disabled>Action</t-tab>
-                    <t-tab disabled>Preview</t-tab>
+                    <t-tab >Preview</t-tab>
                 </t-tabs>
                 <div class="content-area">
                     <iron-pages selected="[[selectedTab]]">
+                        <create-ad-action-tab></create-ad-action-tab>
                         <create-ad-media-tab></create-ad-media-tab>
                         <create-ad-details-tab></create-ad-details-tab>
+                        <create-ad-preview-tab></create-ad-preview-tab>
                     </iron-pages>
                 </div>
             </div>

@@ -1,0 +1,122 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="../../t-input/t-input.html">
+<link rel="import" href="../../t-dropdown/t-dropdown.html">
+<link rel="import" href="../../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../paper-menu/paper-menu.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<dom-module id="media-text-tab">
+    <template>
+        <style include="iron-flex-alignment"></style>
+        <style include="iron-flex"></style>
+        <style include="bo-styles">
+        :host{
+            --paper-tooltip:{
+                font-size: var(--font-16, 16px);
+            };
+        }
+        .margin-right {
+            margin-right: 10px;
+        }
+        
+        .color-button ,
+        .selector > * {
+            padding: 0;
+        }
+        
+        .color-picker-container .label {
+            font-size: var(--font-16, 16px);
+            color: var(--form-label-color, #777);
+            margin-bottom: var(--form-label-margin, 10px);
+        }
+        
+        .color-picker-container template {
+            display: none;
+        }
+        
+        .color-picker-container .item ,
+        .selector > *{
+            width: 40px;
+            height: 40px;
+        }
+        </style>
+        <t-input label="Title" always-float-label class="margin-bottom"></t-input>
+        <t-input label="Content" always-float-label multi-line class="margin-bottom"></t-input>
+        <div class="layout horizontal end row">
+            <t-dropdown always-float-label class="margin-right flex" label="Font">
+                <div>Roboto</div>
+                <div>Open sans</div>
+                <div>San serif</div>
+            </t-dropdown>
+            <t-dropdown always-float-label class="margin-right flex" label="Font Size">
+                <div>12px</div>
+                <div>14px</div>
+                <div>16px</div>
+                <div>18px</div>
+            </t-dropdown>
+            <div class="color-picker-container flex-2">
+                <div class="label">Background Color</div>
+                <iron-selector class="layout horizontal selector" selected="0">
+                    <template is="dom-repeat" items="{{colors}}" as="color">
+                        <div >
+                            <div id="{{color.name}}" class="item" style$="background-color:[[color.code]]"></div>
+                            <paper-tooltip for="[[color.name]]">
+                                [[color.name]]
+                            </paper-tooltip>
+                        </div>
+                    </template>
+                </iron-selector>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'media-text-tab',
+
+        properties: {
+
+            //Pass the colors array to pass
+            colors: {
+                type: Array,
+                value: [{
+                    "code": "#f00",
+                    "name": "red"
+                }, {
+                    "code": "#fff",
+                    "name": "white"
+                }, {
+                    "code": "#000",
+                    "name": "black"
+                }, {
+                    "code": "#fff",
+                    "name": "white1"
+                }, {
+                    "code": "#000",
+                    "name": "black1"
+                }]
+            }
+        },
+        listeners: {
+
+        }
+        // observers:[
+        // ],
+
+    });
+    </script>
+</dom-module>

@@ -9,7 +9,7 @@
                 --darkest-bg:#0f1015;
                 --dark-bg: #1a1c24;
                 --dark-light-bg: #262934;
-                --app-blue-color: #5da9dd;
+                --default-primary-color: #5da9dd;
                 --app-border-color: #e1e6ed;
                 --dark-text: rgba(0,0,0,0.87);
                 --medium-dark-text: rgba(0,0,0,0.54);
@@ -22,13 +22,59 @@
                 --primary-font-family:'Roboto', 'Noto', sans-serif;
 				
 				/*styling atomelements variable*/
-				--default-primary-color: var(--app-blue-color);
+				--app-blue-color: var(--default-primary-color);
 				--checkbox-checked-color: var(--app-blue-color);
                 --input-border-color:var(--app-border-color);
                 --checkbox-item-text-size: var(--font-16,16px);
                 --checkbox-item-text-color: var(--dark-text);
 				--button-primary-bg-color: var(--app-blue-color);
 				--button-primary-text-color: #fff;
+				--color-picker-height: 40px;
+				--input-height: 38px;
+				--form-label-size: 16px;
+				--form-label-color: var(--medium-dark-text);
+				
+				--t-input-container-label:{
+					font-size: 16px;
+				};
+				--t-input-container-input:{
+					font-size: 16px;
+					color: var(--dark-text);
+				};
+				--t-input-container-label-floating:{
+			        -webkit-transform: translateY(-100%);
+			        transform: translateY(-100%);
+				}
+
+				/*Calendar*/
+
+				--calendar-box-background-color:#fff;
+
+				--calendar-year-month-text-color:var(--dark-text);
+
+				--calendar-box-prev-next-color:var(--dark-text);
+				--calendar-box-prev-next-hover-color:#fff;
+				--calendar-box-prev-next-hover-bg:var(--default-primary-color);
+
+				--calendar-disabled-text-color:var(--disabled-text-color);
+
+				--calendar-weekday-text-size:var(--standard-input-field-text-size);
+				--calendar-weekday-text-color:var(--grey-four);
+
+				--calendar-day-text-color:var(--default-primary-color);
+				--calendar-day-hover-bg:var(--default-primary-color);
+				--calendar-day-hover-text:#fff;
+
+				--calendar-day-selected-bg:var(--default-primary-color);
+				--calendar-box-border-color:#eee;
+
+            }
+            t-dropdown ::content select {
+            	height: 38px;
+            }
+            t-dropdown ::content .arrow {
+            	right: 10px;
+    			bottom: 16px;
             }
             t-checkbox #checkboxLabel,
             ::content t-checkbox #checkboxLabel{
@@ -43,8 +89,8 @@
 	            margin-top: 0;
 	        }
             t-calendar{
-	            --input-height:48px;
-	        	}
+            --input-height:48px;
+        	}
 
             a{
                 text-decoration:none;
@@ -77,6 +123,7 @@
 
 			.main-content {
 				padding: 0 var(--standard-gutter, 24px);
+				margin-bottom: 40px;
 			}
 			.page-content {
 				background: #fff;
@@ -165,7 +212,7 @@
 	@apply(--layout-horizontal);
 
 }
-.selector > *{
+.selector > * {
 	border: 1px solid var(--selector-border-color, --app-border-color);
 	opacity: 0.6;
 	text-align: center;

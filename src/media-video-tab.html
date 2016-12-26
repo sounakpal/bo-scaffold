@@ -1,0 +1,50 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="../../t-input/t-input.html">
+<dom-module id="media-video-tab">
+    <template>
+        <style include="bo-styles">
+        :host {
+            
+        }
+        
+        </style>
+        <div class="row">
+            <t-input label="URL" always-float-label ></t-input>
+        </div>
+        <div class="row">
+            <a href="" class="link-style">
+                Show Preview
+            </a>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'media-video-tab',
+
+        properties: {
+            
+        },
+        listeners:{
+
+        }
+        // observers:[
+        // ],
+
+    });
+    </script>
+</dom-module>

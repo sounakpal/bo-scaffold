@@ -1,0 +1,72 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="section-header.html">
+
+<link rel="import" href="action-static-tab.html">
+<link rel="import" href="action-deeplink-tab.html">
+
+
+<dom-module id="create-ad-action-tab">
+	<template>
+        <style include="bo-styles">
+            .selector.small > *{
+                min-width: 100px;
+            }
+		</style>
+		
+                    <div class="row">
+                        <section-header label="Type of links">
+                            <!-- content has to be wrapped by a parent div-->
+                            <div>
+                                Rich-text tooltips are doable but against the Material Design spec.</div>
+                        </section-header>
+                        <iron-selector selected="{{selectedTab}}" class="selector small">
+                            <div>
+                                Static
+                            </div>
+                            <div>
+                                Deeplink
+                            </div>
+                        </iron-selector>
+                    </div>
+                    <div class="row">
+                        <iron-pages selected="[[selectedTab]]">
+                            <action-static-tab></action-static-tab>
+                            <action-deeplink-tab></action-deeplink-tab>
+                        </iron-pages>
+                    </div>
+
+                    <!-- Footer portion -->
+                    <div class="row"></div>
+                    <div class="row devider-horizontal"></div>
+                    <t-button class="primary" label="Next"></t-button>
+	</template>
+	<script>
+		Polymer({
+			is: 'create-ad-action-tab',
+
+        properties:{
+            //the main tab selectionx
+            selectedTab:{
+                type: Number,
+                value:0
+            }
+        }
+		});
+	</script>
+</dom-module>

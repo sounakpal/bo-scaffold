@@ -36,91 +36,92 @@ Example:
 --vaadin-upload-button-add	A mixin that is applied to the upload button	{}
 --vaadin-upload-button-add-disabled	A mixin that is applied to the upload button when maxFiles limit is reached	{}
 			*/
-
             --vaadin-upload-drop-label: {
                 font-weight: 100;
                 margin-bottom: 15px;
                 text-align: center;
-            };
-            --vaadin-upload-buttons-primary: {
-	        	@apply(--layout-vertical);
-	        	@apply(--layout-center);
-	        	@apply(--layout-center-justified);
             }
-            --vaadin-upload-buttons-secondary
-            --vaadin-upload-button-add: {
+            ;
+            --vaadin-upload-buttons-primary: {
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+                @apply(--layout-center-justified);
+            }
+            --vaadin-upload-buttons-secondary --vaadin-upload-button-add: {
                 background: #f7f7f7;
                 color: var(--lightest-text);
                 order: 2;
                 border: 1px solid var(--app-border-color);
             }
         }
+        
         .item {
-        	width: 174px;
-        	height: 222px;
-        	box-sizing: border-box;
-			cursor: pointer;
-			margin: 10px;
+            width: 174px;
+            height: 222px;
+            box-sizing: border-box;
+            cursor: pointer;
+            margin: 10px;
         }
+        
         .add-button {
-        	color: var(--app-blue-color);
-        	border: 1px dashed var(--app-blue-color);
-
-
-        	@apply(--layout-vertical);
-        	@apply(--layout-center);
-        	@apply(--layout-center-justified);
+            color: var(--app-blue-color);
+            border: 1px dashed var(--app-blue-color);
+            @apply(--layout-vertical);
+            @apply(--layout-center);
+            @apply(--layout-center-justified);
         }
-        :host[atleast-one-file] #upload ::content .file-list{
-        	@apply(--layout-horizontal);
-        	@apply(--layout-center);
-        	@apply(--layout-start-justified);
-        	@apply(--layout-wrap);
-
-
+        
+        :host[atleast-one-file] #upload::content .file-list {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            @apply(--layout-start-justified);
+            @apply(--layout-wrap);
         }
-        :host[atleast-one-file] #upload ::content #buttons{
-			display: none;
+        
+        :host[atleast-one-file] #upload::content #buttons {
+            display: none;
         }
-
-        #upload{
-        	padding: 10px;
+        
+        #upload {
+            padding: 10px;
         }
         </style>
-        <vaadin-upload id="upload" max-files="3" files="{{files}}" target="/components/bo-scaffold/uploads/" on-files-changed="_checkFilesLength" accept="image/*" max-file-size="1000000" i18n="[[uploadTextSetting]]">
-        	<div class="drop-label" hidden$="{{atleastOneFile}}">
+        <vaadin-upload id="upload" class="row" max-files="6" files="{{files}}" target="/components/bo-scaffold/uploads/" on-files-changed="_checkFilesLength" accept="image/*" max-file-size="1000000" i18n="[[uploadTextSetting]]">
+            <div class="drop-label" hidden$="{{atleastOneFile}}">
                 <div class="font-20 margin-bottom">
                     Drag and drop files here to upload
                 </div>
                 <div class="font-12">
                     OR
                 </div>
-        	</div>
+            </div>
             <div class="file-list">
                 <template is="dom-repeat" items="{{files}}" as="file">
-                  <media-upload-item 
-                  	class="item" 
-					background-url="http://placehold.it/150x150"
-					file="[[file]]">
-                  </media-upload-item>
+                    <media-upload-item class="item" background-url="http://placehold.it/150x150" file="[[file]]">
+                    </media-upload-item>
                 </template>
-            	<div class="add-button item font-16"  on-tap="_openFileUpload" hidden$="{{!atleastOneFile}}">
-            		<iron-icon  icon="add"></iron-icon>
-            		<div>Add Image</div>
-            	</div>
+                <div class="add-button item font-16" on-tap="_openFileUpload" hidden$="{{!atleastOneFile}}">
+                    <iron-icon icon="add"></iron-icon>
+                    <div>Add Image</div>
+                </div>
             </div>
         </vaadin-upload>
+        <div class="row">
+            <a href="" class="link-style">
+                Show Preview
+            </a>
+        </div>
     </template>
     <script>
     Polymer({
         is: 'media-images-tab',
 
         properties: {
-        	atleastOneFile:{
-        		type: Boolean,
-        		reflectToAttribute:true,
-        		value: false
-        	},
+            atleastOneFile: {
+                type: Boolean,
+                reflectToAttribute: true,
+                value: false
+            },
 
             uploadTextSetting: {
                 type: Object,
@@ -163,23 +164,23 @@ Example:
                 }
             }
         },
-        listeners:{
-        	// 'upload-response':'_checkFilesLength',
-        	// 'file-remove':'_checkFilesLength'
+        listeners: {
+            // 'upload-response':'_checkFilesLength',
+            // 'file-remove':'_checkFilesLength'
 
         },
         // observers:[
         // 	'_checkFilesLength(files)'
         // ],
-        _checkFilesLength: function(arr){
-        	if(this.files){
-        		this.atleastOneFile  = this.files.length > 0 ? true: false;
-        	}
+        _checkFilesLength: function(arr) {
+            if (this.files) {
+                this.atleastOneFile = this.files.length > 0 ? true : false;
+            }
         },
 
         //initiating the file click
-        _openFileUpload: function(){
-        	this.$.upload._onAddFilesClick();
+        _openFileUpload: function() {
+            this.$.upload._onAddFilesClick();
         }
 
     });
