@@ -1,0 +1,274 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="section-header.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../t-input/t-input.html">
+<link rel="import" href="../../t-button/t-button.html">
+<link rel="import" href="../../t-calendar/t-calendar.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<!-- <link rel="import" href="../../t-shared-components/theme.html"> -->
+<link rel="import" href="../../t-checkbox-group/t-checkbox-group.html">
+<dom-module id="create-ad-details-tab">
+	<template>
+        <style include="iron-flex"></style>
+        <style include="bo-styles">
+        .ad-page-selector {
+            -ms-flex-wrap: wrap;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        .ad-page-selector > *{
+            padding: 10px;
+          -ms-flex-direction: column;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+        }
+        .ad-page-selector p{
+            margin: 0;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .ad-page-selector img{
+            display: block;
+        }
+        .calendar{
+            margin-right: 15px;
+        }
+        .hidden-selector{
+            /*this is a hack to adjust the dynamic width of calendar*/
+            visibility: hidden;
+        }
+		</style>
+		
+                    <div class="row">
+                        <section-header label="Ad you would like to display for division(s)">
+                            <!-- content has to be wrapped by a parent div-->
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.</div>
+                        </section-header>
+                        <t-checkbox-group inline hide-label data='["First Choice","Second Choice","Third Choice","Fourth choice","fifth choice"]' selected-values='[0]'></t-checkbox-group>
+                    </div>
+                    <div class="row">
+                        <section-header label="Name your Ad">
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.
+                                </>
+                            </div>
+                        </section-header>
+                        <t-input no-label-float label=" " value="{{adName}}" />
+                    </div>
+                    <div class="row">
+                        <section-header label="Ad page">
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.
+                                </>
+                            </div>
+                        </section-header>
+                        <iron-selector multi selected="" class="font-16 ad-page-selector selector large">
+                            <div>
+                                <img src="../img/Home-Ad.png" alt="">
+                                <p>Home</p>
+                            </div>
+                            <div>
+                                <img src="../img/Interstitial-Ad.png" alt="">
+                                <p>Interstitial</p>
+                            </div>
+                            <div>
+                                <img src="../img/Result-Ad.png" alt="">
+                                <p>Result</p>
+                            </div>
+                            <div>
+                                <img src="../img/Map-Ad.png" alt="">
+                                <p>Map</p>
+                            </div>
+                            <div>
+                                <img src="../img/Confirmation-Ad.png" alt="">
+                                <p>Confirmation</p>
+                            </div>
+                            <div>
+                                <img src="../img/Checkout-Ad.png" alt="">
+                                <p>Checkout</p>
+                            </div>
+                        </iron-selector>
+                    </div>
+                    <div class="row">
+                        <section-header label="Ad size">
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.
+                                </>
+                            </div>
+                        </section-header>
+                        <iron-selector selected="" class="font-16 full-bleed ad-size-selector selector medium">
+                            <div>
+                                960 X 100
+                            </div>
+                            <div>
+                                590 X 375
+                            </div>
+                            <div>
+                                470 X 100
+                            </div>
+                            <div>
+                                310 X 200
+                            </div>
+                            <div>
+                                305 X 200
+                            </div>
+                            <div>
+                                250 X 250
+                            </div>
+                        </iron-selector>
+                    </div>
+                    <div class="row">
+                        <section-header label="Ad duration">
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.
+                                </>
+                            </div>
+                        </section-header>
+                        <div class="layout horizontal center inner-row">
+                            <t-calendar class="flex calendar" format="mm/dd/yy"  label="From" no-label-float></t-calendar>
+                            <t-calendar class="flex calendar" format="mm/dd/yy" label="To" no-label-float></t-calendar>
+                            <div class="selector-container layout horizontal center">
+                                <iron-selector selected="{{allDaySelected}}" class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        ALL DAYS
+                                    </div>
+                                </iron-selector>
+                                <iron-selector disabled$="{{allDaySelected}}" selected="" class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        M
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        W
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        F
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                </iron-selector>
+                                <paper-icon-button icon="delete" class="dark-medium"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div class="layout horizontal center inner-row">
+                            <t-calendar class="flex calendar" format="mm/dd/yy"  label="From" no-label-float></t-calendar>
+                            <t-calendar class="flex calendar" format="mm/dd/yy" label="To" no-label-float></t-calendar>
+                            <div class="selector-container layout horizontal center">
+                                <iron-selector selected="{{allDaySelected}}" class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        ALL DAYS
+                                    </div>
+                                </iron-selector>
+                                <iron-selector disabled$="{{allDaySelected}}" selected="" class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        M
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        W
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        F
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                </iron-selector>
+                                <paper-icon-button icon="delete" class="dark-medium"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div class="layout horizontal center inner-row">
+                            <a href="#" class="link-style">Add</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <section-header label="Ad blackout duration">
+                            <div>
+                                <img src="https://placekitten.com/50/50"> Rich-text tooltips are doable but against the Material Design spec.
+                                </>
+                            </div>
+                        </section-header>
+                        <div class="layout horizontal center inner-row">
+                            <t-calendar class="flex calendar" format="mm/dd/yy"  label="From" no-label-float></t-calendar>
+                            <t-calendar class="flex calendar" format="mm/dd/yy" label="To" no-label-float></t-calendar>
+                            <!-- Note this selector is hidden to match the width we will find an alternative -->
+                            <div class="hidden-selector layout horizontal center">
+                                <iron-selector class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        ALL DAYS
+                                    </div>
+                                </iron-selector>
+                                <iron-selector selected="" class="font-16 ad-size-selector selector small">
+                                    <div>
+                                        M
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        W
+                                    </div>
+                                    <div>
+                                        T
+                                    </div>
+                                    <div>
+                                        F
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                    <div>
+                                        S
+                                    </div>
+                                </iron-selector>
+                                <paper-icon-button icon="delete" class="dark-medium"></paper-icon-button>
+                            </div>
+                        </div>
+                        <div class="layout horizontal center inner-row">
+                            <a href="#" class="link-style">Add</a>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div class="row devider-horizontal"></div>
+                    <t-button class="primary" label="Next"></t-button>
+	</template>
+	<script>
+		Polymer({
+			is: 'create-ad-details-tab'
+		});
+	</script>
+</dom-module>

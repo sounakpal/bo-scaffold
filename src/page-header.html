@@ -1,0 +1,61 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="page-header">
+	<template>
+		<style include="iron-flex">
+			:host {
+				display: block;
+				font-family: var(--primary-font-family, 'Open sans');
+			}
+			.header {
+				padding: var(--standard-gutter, 24px) 0;
+			}
+			.page-title{
+				font-size: 24px;
+				color: rgba(0,0,0,0.87);
+			}
+			.breadcrumbs {
+				font-size: 12px;
+				color: #1f4b99;
+				word-spacing: 3px;
+				text-transform: uppercase;
+			}
+			::content .current{
+				color: rgba(0,0,0,0.54);
+			}
+		</style>
+		
+            <div class="header layout horizontal center">
+                <div class="page-title flex">[[title]]</div>
+                <div class="breadcrumbs"><content select="*"></content></div>
+            </div>
+	</template>
+	<script>
+		Polymer({
+			is: 'page-header',
+
+			properties:{
+				//pass the page title
+				title:{
+					type:String,
+					value: 'Page header'
+				}
+			}
+		});
+	</script>
+</dom-module>

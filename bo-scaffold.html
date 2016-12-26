@@ -1,0 +1,146 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../app-layout/app-header/app-header.html">
+<link rel="import" href="../app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="src/app-menu.html">
+<link rel="import" href="src/bo-styles.html">
+<dom-module id="bo-scaffold">
+    <template>
+        <style include="bo-styles"></style>
+        <style include="iron-flex">
+        :host {
+            display: block;
+            height: 100%;
+            font-family: var(--primary-font-family, 'Open sans');
+        }
+        
+        app-drawer-layout {
+            height: 100%;
+            background: var(--app-bg-color, #f0f4f9);
+        }
+        
+        app-toolbar {
+            background-color: var(--app-header-bg, #fff);
+            color: var(--app-header-color, #ddd);
+            height: var(--app-header-height, 80px);
+        }
+        
+        app-drawer {
+            --app-drawer-width: 330px;
+            --app-drawer-content-container: {
+                background-color: var(--menu-bg-color, #1a1c24);
+                overflow: auto;
+            }
+        }
+        
+        .menu-header-toolbar {
+            @apply(--layout-center-justified);
+        }
+        
+        .time {
+            margin-right: 10px;
+        }
+        
+        .time iron-icon {
+            width: 12px;
+            height: 12px;
+            margin-right: 2px;
+        }
+        
+        .dropdown-header {
+            padding: 0 35px 0 8px;
+            line-height: 38px;
+            border: 1px solid var(--app-border-color, #e8edf3);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .dropdown-header:after {
+            content: url('img/arrow-down.png');
+            position: absolute;
+            width: 10px;
+            height: 6px;
+            right: 8px;
+            top: -2px;
+        }
+        </style>
+        <app-drawer-layout>
+            <app-drawer id="drawer">
+                <app-toolbar class="menu-header-toolbar">
+                    <img src="img/logo.png" alt="logo" rel="logo">
+                </app-toolbar>
+                <bo-menu></bo-menu>
+            </app-drawer>
+            <app-header-layout>
+                <app-header fixed>
+                    <app-toolbar>
+                        <paper-icon-button noink icon="bo:hamburger" title="toggle menu" drawer-toggle></paper-icon-button>
+                        <paper-icon-button noink icon="[[_computeFullScreenIcon(_fullScreenActive)]]" title="Go full screen" on-tap="toggleFullscreen"></paper-icon-button>
+                        <paper-icon-button noink icon="bo:magnify" title="Search"></paper-icon-button>
+                        <span class="flex"></span>
+                        <div class="time font-12">
+                            <iron-icon icon="bo:watch"></iron-icon>
+                            <span>GMT+530</span>
+                        </div>
+                        <div class="dropdown-header font-14">
+                            Pinslight Back-Office
+                        </div>
+                    </app-toolbar>
+                </app-header>
+                <!-- content-body -->
+                <div>
+                    <content select=".content"></content>
+                </div>
+            </app-header-layout>
+        </app-drawer-layout>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'bo-scaffold',
+
+        properties: {
+
+            //setting full screen to false
+            _fullScreenActive: {
+                type: Boolean,
+                value: false
+            }
+        },
+        //checkIcon of fullscreen
+        _computeFullScreenIcon: function(active) {
+            return active ? 'bo:close-screen' : 'bo:full-screen';
+        },
+
+        //toggle Fullscreen
+        toggleFullscreen: function() {
+            if ((document.fullScreenElement && document.fullScreenElement !== null) ||
+                (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+                //SETTING FLAG IF FULLSCREEN
+                this._fullScreenActive = true;
+                if (document.documentElement.requestFullScreen) {
+                    document.documentElement.requestFullScreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullScreen) {
+                    document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
+                this._fullScreenActive = false;
+            }
+        }
+
+
+    });
+    </script>
+</dom-module>

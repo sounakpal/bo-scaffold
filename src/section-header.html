@@ -1,0 +1,74 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+
+<dom-module id="section-header">
+	<template>
+		<style>
+			:host {
+				display: block;
+				font-family: var(--primary-font-family, 'Open sans');
+				color: var(--dark-medium,#9a9a9a);
+				padding: 5px 0;
+				font-size: var(--section-header-font-size, 18px);
+			}
+
+			#icon{
+				width: 18px;
+				height: 18px;
+				color: var(--section-header-tooltip-color, #cac9ca);
+			}
+			
+	          .custom {
+	            --paper-tooltip-background: var(--tooltip-bg,#fff);
+	            --paper-tooltip-text-color: var(--tooltip-color,#c0c0c0);
+	            max-width: 240px;
+	            border: 1px solid var(--app-border-color, #e8edf3);
+				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+				--paper-tooltip:{
+					font-size: var(--tooltip-font-size,16px);
+				}
+	          }
+		</style>
+		<div>[[label]] <iron-icon id="icon" hidden$="[[noTooltip]]" icon="bo:help"></iron-icon></div>
+		<paper-tooltip for="icon" position="[[tooltipPosition]]" class="custom" animation-delay="0">
+          <div><content select="*"></content></div>
+        </paper-tooltip>
+	</template>
+	<script>
+		Polymer({
+			is: 'section-header',
+
+			properties:{
+				//pass the heading of the component
+				label: String,
+
+				//hide the tooltip from action
+				noTooltip: {
+					type: Boolean,
+					value: false
+				},
+
+				//Put the position of the tooltip
+				tooltipPosition: {
+					type: String,
+					value: 'right'
+				}
+
+			}
+		});
+	</script>
+</dom-module>

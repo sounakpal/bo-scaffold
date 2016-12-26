@@ -1,0 +1,96 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="section-header.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../t-input/t-input.html">
+<link rel="import" href="../../t-button/t-button.html">
+<link rel="import" href="../../t-calendar/t-calendar.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<!-- <link rel="import" href="../../t-shared-components/theme.html"> -->
+<link rel="import" href="../../t-checkbox-group/t-checkbox-group.html">
+
+<link rel="import" href="media-images-tab.html">
+
+
+<dom-module id="create-ad-media-tab">
+	<template>
+        <style include="iron-flex"></style>
+        <style include="bo-styles">
+            .media-selector {
+                color: var(--medium-dark-text);
+                font-weight: 100;
+            }
+            .media-selector span{
+                margin-left: 5px;
+            }
+            .media-selector iron-icon{
+                height: 44px;
+                width: 44px;
+            }
+		</style>
+		
+                    <div class="row">
+                        <section-header label="Select Ad media type">
+                            <!-- content has to be wrapped by a parent div-->
+                            <div>
+                                Rich-text tooltips are doable but against the Material Design spec.</div>
+                        </section-header>
+                        <iron-selector selected="{{selectedTab}}" class="font-20 media-selector selector medium full-bleed">
+                            <div>
+                                <iron-icon icon="bo:image"></iron-icon>
+                                <span>Image</span>
+                            </div>
+                            <div>
+                                <iron-icon icon="bo:video"></iron-icon>
+                                <span>Video</span>
+                            </div>
+                            <div>
+                                <iron-icon icon="bo:text"></iron-icon>
+                                <span>Text</span>
+                            </div>
+                        </iron-selector>
+                    </div>
+                    <div class="row">
+                        <iron-pages selected="[[selectedTab]]">
+                            <media-images-tab></media-images-tab>
+                            <media-video-tab></media-video-tab>
+                            <media-text-tab></media-text-tab>
+                        </iron-pages>
+                    </div>
+                    
+
+
+                    <!-- Footer portion -->
+                    <div class="row"></div>
+                    <div class="row devider-horizontal"></div>
+                    <t-button class="primary" label="Next"></t-button>
+	</template>
+	<script>
+		Polymer({
+			is: 'create-ad-media-tab',
+
+        properties:{
+            //the main tab selectionx
+            selectedTab:{
+                type: Number,
+                value:0
+            }
+        }
+		});
+	</script>
+</dom-module>

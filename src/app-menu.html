@@ -1,0 +1,139 @@
+<link rel="import" href="../../paper-menu/paper-menu.html">
+<link rel="import" href="../../paper-menu/paper-submenu.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="app-icons.html">
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<dom-module id="bo-menu">
+    <template>
+        <style include="iron-flex">
+        :host {
+            display: block;
+            --paper-menu-selected-item: {
+                font-weight: normal;
+                color: #fff;
+                background: var(--app-primary-color, #5da9dd);
+                outline: 0;
+            };
+            --paper-menu: {
+                margin: 0;
+                padding: 0;
+                outline: 0;
+                background-color: transparent;
+            }
+        }
+        .menu-trigger.iron-selected iron-icon:last-child{
+        	transform: rotate(90deg);
+        }
+        paper-item {
+            --paper-item-min-height: 62px;
+            padding: 0 20px;
+            background: var(--app-menu-item-bg, #262934);
+            text-transform: uppercase;
+            margin-bottom: 1px;
+            color: var(--app-menu-color, #797a81);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+        
+        paper-submenu paper-menu{
+        	background: var(--app-primary-color, #5da9dd);
+        	padding: 10px 0;
+        }
+        paper-submenu paper-menu paper-item{
+            --paper-item-min-height: 35px;
+        	background: transparent;
+        	color: #fff;
+    	    padding-left: 66px;
+    	    margin-bottom: 0;
+        }
+        paper-item:hover {
+            background: var(--menu-bg-color, #2d313e);
+        }
+        paper-item:after,
+        paper-item:before{
+        	display: none;
+        }
+        iron-icon:first-child {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+        }
+        </style>
+        <paper-menu>
+            <paper-item>
+                <iron-icon icon="bo:dashboard"></iron-icon>
+                <span class="flex">Dashboard</span>
+                <iron-icon icon="bo:menu-right"></iron-icon>
+            </paper-item>
+            <paper-item>
+                <iron-icon icon="bo:reports"></iron-icon>
+                <span class="flex ">Reports</span>
+                <iron-icon icon="bo:menu-right"></iron-icon>
+            </paper-item>
+            <paper-item>
+                <iron-icon icon="bo:ad"></iron-icon>
+                <span class="flex ">Ads Management</span>
+                <iron-icon icon="bo:menu-right"></iron-icon>
+            </paper-item>
+            <paper-item>
+            	<iron-icon icon="bo:supplier"></iron-icon>
+            	<span class="flex ">Suppliers</span>
+            	<iron-icon icon="bo:menu-right"></iron-icon>
+            </paper-item>
+            <paper-item>
+            	<iron-icon icon="bo:markup"></iron-icon>
+            	<span class="flex ">Markup</span>
+            	<iron-icon icon="bo:menu-right"></iron-icon>
+            </paper-item>
+        	<paper-submenu>
+	            <paper-item  class="menu-trigger">
+	            	<iron-icon icon="bo:user"></iron-icon>
+	            	<span class="flex ">Users</span>
+	            	<iron-icon icon="bo:menu-right"></iron-icon>
+	            </paper-item>
+	            <paper-menu class="menu-content sublist">
+	              <paper-item>Profile</paper-item>
+	              <paper-item>Agencies</paper-item>
+	              <paper-item>Affiliates</paper-item>
+	              <paper-item>SITES</paper-item>
+	            </paper-menu>
+	          </paper-submenu>
+        	<paper-submenu>
+	            <paper-item  class="menu-trigger">
+	            	<iron-icon icon="bo:organization"></iron-icon>
+	            	<span class="flex ">Organization</span>
+	            	<iron-icon icon="bo:menu-right"></iron-icon>
+	            </paper-item>
+	            <paper-menu class="menu-content sublist">
+	              <paper-item>Profile</paper-item>
+	              <paper-item>Agencies</paper-item>
+	              <paper-item>Affiliates</paper-item>
+	              <paper-item>SITES</paper-item>
+	            </paper-menu>
+	          </paper-submenu>
+        </paper-menu>
+    </template>
+    <script>
+    Polymer({
+        is: 'bo-menu'
+    });
+    </script>
+</dom-module>

@@ -1,0 +1,380 @@
+<!--
+@license
+Copyright (c) 2016 Vaadin Ltd.
+This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
+-->
+
+<!--
+`<media-upload-item>` element represents a file in the file list of `<vaadin-upload>`.
+
+### Styling
+
+The following custom properties are available for styling the component.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--media-upload-item`|A mixin that is applied to the host element|`{}`
+`--media-upload-item-row`|A mixin that is applied to the file row|`{}`
+`--media-upload-item-status-icon`|A mixin that is applied to all file status icons. By default, file status icons are hidden until the upload process finishes.|`{}`
+`--media-upload-item-status-icon-complete`|A mixin that is applied to the complete status icon when the upload process succeeds|`{}`
+`--media-upload-item-status-icon-error`|A mixin that is applied to the error status icon when the upload process fails|`{}`
+`--media-upload-item-meta`|A mixin that is applied to the info container|`{}`
+`--media-upload-item-meta-complete`|A mixin that is applied to the info container when file upload is complete|`{}`
+`--media-upload-item-meta-error`|A mixin that is applied to the info container when an error happens|`{}`
+`--media-upload-item-name`|A mixin that is applied to the file name|`{}`
+`--media-upload-item-status`|A mixin that is applied to the file status label|`{}`
+`--media-upload-item-error`|A mixin that is applied to the file error label|`{}`
+`--media-upload-item-commands`|A mixin that is applied to the buttons container|`{}`
+`--media-upload-item-progress`|A mixin that is applied to the included paper-progress|`{}`
+`--media-upload-item-progress-error`|A mixin that is applied to the progress bar when error is set|`{}`
+`--media-upload-item-progress-indeterminate`|A mixin that is applied to the progress bar when indeterminate|`{}`
+`--media-upload-item-progress-uploading-indeterminate`|A mixin that is applied to the progress bar when uploading and indeterminate|`{}`
+`--media-upload-item-progress-complete`|A mixin that is applied to the progress when file is complete|`{}`
+`--media-upload-item-canceled`|A mixin that is applied to the upload cancel animation|`{}`
+
+@element media-upload-item
+@demo demo/
+-->
+
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../paper-styles/typography.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-progress/paper-progress.html">
+
+<dom-module id="media-upload-item">
+  <template>
+      <style include="bo-styles">
+      :host {
+        @apply(--layout-vertical);
+        @apply(--media-upload-item);
+        
+        position: relative;
+      }
+
+      #row {
+        @apply(--layout-vertical);
+        border: 1px solid var(--app-border-color );
+        height: 100%;
+
+        @apply(--media-upload-item-row);
+      }
+      #row[error]{
+        border-color:var(--error-color);
+      }
+      .image-container{
+        @apply(--layout-flex);
+        border: 10px solid #f7f7f7;
+      }
+      .input-container{
+        border-top: 1px solid var(--app-border-color);
+      }
+      #row[error] .input-container{
+        border-color: var(--error-color);
+      }
+
+      .image{
+          background-size: cover;
+          width: 100%;
+          height: 100%;
+      }
+
+      #textarea{
+        width: 100%;
+        resize: none;
+        font-size: 12px;
+      }
+
+      .icon-button{
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateX(50%) translateY(-50%) scale(0.5);
+        background: var(--app-border-color);
+        border-radius: 50%;
+        color: var(--light-text);
+      }
+
+      #row[error]
+      .icon-button{
+        background: var(--error-color);
+      }
+      /*iron-icon {
+        width: 24px;
+        height: 24px;
+        padding: 8px;
+        color: var(--primary-text-color, #000);
+        opacity: 0;
+        margin-right: -40px;
+        transition: margin-right 0.3s 0.1s, opacity 0.3s;
+        @apply(--media-upload-item-status-icon);
+      }
+
+      iron-icon[icon="vaadin-upload:warning"] {
+        color: var(--error-color, #f40303);
+      }
+
+      iron-icon[complete],
+      iron-icon[error] {
+        margin-right: 0;
+        opacity: 1;
+        transition: margin-right 0.3s, opacity 0.3s 0.1s;
+      }
+
+      iron-icon[complete] {
+        @apply(--media-upload-item-status-icon-complete);
+      }
+
+      iron-icon[error] {
+        @apply(--media-upload-item-status-icon-error);
+      }
+
+      #meta {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+        height: 32px;
+        transition: height 0.1s;
+        width: 1px;
+        color: var(--disabled-text-color, gray);
+        @apply(--media-upload-item-meta);
+      }
+
+      #meta[complete] {
+        height: 16px;
+        color: var(--primary-text-color, #000);
+        @apply(--media-upload-item-meta-complete);
+      }
+
+      #meta[error] {
+        color: var(--error-color, #f40303);
+        @apply(--media-upload-item-meta-error);
+      }
+
+      #name,
+      #status,
+      #error {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 16px !important;
+      }
+
+      #name {
+        @apply(--paper-font-body2);
+        @apply(--media-upload-item-name);
+      }
+
+      #status {
+        @apply(--paper-font-caption);
+        color: var(--disabled-text-color, gray);
+        @apply(--media-upload-item-status);
+      }
+
+      #error {
+        @apply(--paper-font-caption);
+        color: var(--error-color, #f40303);
+        @apply(--media-upload-item-error);
+      }*/
+/*
+      #commands {
+        @apply(--layout-horizontal);
+        @apply(--media-upload-item-commands);
+      }
+
+      #commands [icon] {
+        color: var(--primary-text-color, #000);
+      }
+
+      #commands [icon="vaadin-upload:refresh"],
+      #commands [icon="vaadin-upload:clear"] {
+        color: var(--primary-color, #00B4F0);
+      }*/
+#textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: var(--lightest-text);
+  font-size: 12px;
+}
+#textarea::-moz-placeholder { /* Firefox 19+ */
+  color: var(--lightest-text);
+  font-size: 12px;
+}
+#textarea:-ms-input-placeholder { /* IE 10+ */
+  color: var(--lightest-text);
+  font-size: 12px;
+}
+#textarea:-moz-placeholder { /* Firefox 18- */
+  color: var(--lightest-text);
+  font-size: 12px;
+}
+      paper-progress {
+        --paper-progress-active-color: var(--primary-color, #00B4F0);
+        width: 100%;
+        height: 2px;
+        @apply(--media-upload-item-progress);
+      }
+
+      paper-progress[error] {
+        --paper-progress-container-color: var(--error-color, #f40303);
+        --paper-progress-active-color: var(--error-color, #f40303);
+        @apply(--media-upload-item-progress-error);
+      }
+
+      paper-progress[indeterminate] {
+        --paper-progress-container-color: var(--primary-color, #00B4F0);
+        --paper-progress-active-color: rgba(1, 97, 155, 0.5);
+        @apply(--media-upload-item-progress-indeterminate);
+      }
+
+      paper-progress[uploading][indeterminate] {
+        --paper-progress-container-color: var(--divider-color, #e0e0e0);
+        --paper-progress-active-color: var(--disabled-text-color, gray);
+        @apply(--media-upload-item-progress-uploading-indeterminate);
+      }
+
+      paper-progress[complete] {
+        @apply(--media-upload-item-progress-complete);
+      }
+
+      :host(.fade-out) {
+        animation-name: fade-out;
+        animation-duration: 0.6s;
+        @apply(--media-upload-item-canceled);
+      }
+
+      @keyframes fade-out {
+        0% {
+          max-height: 38px;
+        }
+        33%  {
+          max-height: 38px;
+          margin: 4px 0 0;
+          padding: 6px 0 4px;
+          opacity: 0.25;
+        }
+        67% {
+          opacity: 0;
+        }
+        100% {
+          max-height: 0px;
+          margin: 0;
+          padding: 0;
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <div id="row" error$="[[file.error]]">
+
+      <!-- <iron-icon icon="vaadin-upload:done" complete$="[[file.complete]]"></iron-icon>
+      <iron-icon icon="vaadin-upload:warning" error$="[[file.error]]"></iron-icon>
+
+      <div id="meta" complete$="[[file.complete]]" error$="[[file.error]]">
+        <div id="name">[[file.name]]</div>
+        <div id="status" hidden$="[[!file.status]]">[[file.status]]</div>
+        <div id="error" hidden$="[[!file.error]]">[[file.error]]</div>
+      </div>
+
+      <div id="commands">
+        <paper-icon-button icon="vaadin-upload:refresh" file-event="file-retry" on-tap="_fireFileEvent" hidden$="[[!file.error]]"></paper-icon-button>
+      </div> -->
+      <div class="image-container">
+        <div class="image" style$="background-image:url([[backgroundUrl]])"></div>
+      </div>
+      <div class="input-container">
+        <textarea id="textarea" type="text" maxlength="50" placeholder="Type your title here..." class="style-input"></textarea>
+      </div>
+        <paper-icon-button class="icon-button" icon="vaadin-upload:clear" file-event="file-abort" on-tap="_fireFileEvent"></paper-icon-button>
+    </div>
+
+    <paper-progress
+        id="progress"
+        value$="[[file.progress]]"
+        error$="[[file.error]]"
+        indeterminate$="[[file.indeterminate]]"
+        uploading$="[[file.uploading]]"
+        complete$="[[file.complete]]"
+        >
+    </paper-progress>
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'media-upload-item',
+
+    properties: {
+      /**
+       * File metadata, upload status and progress information.
+       */
+      file: Object,
+      /**
+       * Pass the bg url of the img or set it after upload
+       */
+      backgroundUrl:{
+        type:String
+      }
+    },
+
+    observers: [
+      '_fileChanged(file.*)',
+      '_fileAborted(file.abort)'
+    ],
+
+    _fileChanged: function() {
+      this.$.progress.updateStyles();
+    },
+
+    _fileAborted: function(abort) {
+      if (abort) {
+        this.toggleClass('fade-out', true);
+        var animationName = window.getComputedStyle(this).animationName;
+        if (!animationName || animationName === 'none') {
+          this.fire('file-remove', {file: this.file});
+        } else {
+          this.addEventListener('animationend', function() {
+            this.fire('file-remove', {file: this.file});
+          }.bind(this));
+        }
+      }
+    },
+
+    _fireFileEvent: function(e) {
+      e.preventDefault();
+      var button = Polymer.dom(e).localTarget;
+      return this.fire(button.getAttribute('file-event'), {file: this.file});
+    }
+
+   /**
+    * Fired when the retry button is pressed. It is listened by `vaadin-upload`
+    * which will start a new upload process of this file.
+    *
+    * @event file-retry
+    * @param {Object} detail
+    *  @param {Object} detail.file file to retry upload of
+    */
+
+    /**
+     * Fired when abort button is pressed. It is listened by `vaadin-upload` which
+     * will abort the upload in progress, but will not remove the file from the list
+     * to allow the animation to hide the element to be run.
+     *
+     * @event file-abort
+     * @param {Object} detail
+     *  @param {Object} detail.file file to abort upload of
+     */
+
+    /**
+     * Fired after the animation to hide the element has finished. It is listened
+     * by `vaadin-upload` which will actually remove the file from the upload
+     * file list.
+     *
+     * @event file-remove
+     * @param {Object} detail
+     *  @param {Object} detail.file file to remove from the  upload of
+     */
+  });
+
+</script>

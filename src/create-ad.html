@@ -1,0 +1,75 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+<link rel="import" href="bo-styles.html">
+<link rel="import" href="page-header.html">
+<link rel="import" href="section-header.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../t-tabs-v2/t-tabs.html">
+<link rel="import" href="../../t-tabs-v2/t-tab.html">
+<link rel="import" href="../../iron-pages/iron-pages.html">
+<link rel="import" href="create-ad-details-tab.html">
+<link rel="import" href="create-ad-media-tab.html">
+<dom-module id="create-ad">
+    <template>
+        <style include="iron-flex"></style>
+        <style include="bo-styles">
+        
+            t-tabs {
+                box-shadow: none;
+                --grey-four: #9e9e9e;
+            }
+            
+            t-tab[disabled] {
+                color: var(--tab-disabled-color, #e4e4e4);
+            }
+        </style>
+        <div class="main-content">
+            <page-header title="Create Ad">
+                <!-- You need to wrap the entire content in one div/element -->
+                <div>
+                    HOME <span class="current">></span> ADS Management <span class="current">> Create Ad</span>
+                </div>
+            </page-header>
+            <div class="page-content">
+                <t-tabs class="header-tabs" selected="{{selectedTab}}" noink alignment="center">
+                    <t-tab>Media</t-tab>
+                    <t-tab>Details</t-tab>
+                    <t-tab disabled>Action</t-tab>
+                    <t-tab disabled>Preview</t-tab>
+                </t-tabs>
+                <div class="content-area">
+                    <iron-pages selected="[[selectedTab]]">
+                        <create-ad-media-tab></create-ad-media-tab>
+                        <create-ad-details-tab></create-ad-details-tab>
+                    </iron-pages>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'create-ad',
+
+        properties:{
+            //the main tab selectionx
+            selectedTab:{
+                type: Number,
+                value:0
+            }
+        }
+    });
+    </script>
+</dom-module>
