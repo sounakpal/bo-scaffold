@@ -14,75 +14,61 @@ Example:
 @demo demo/index.html
 -->
 <link rel="import" href="bo-styles.html">
+<link rel="import" href="section-header.html">
 <link rel="import" href="../../t-input/t-input.html">
 <link rel="import" href="../../t-dropdown/t-dropdown.html">
-<link rel="import" href="../../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../t-multiselect/t-multiselect.html">
+<link rel="import" href="../../t-checkbox-group/t-checkbox-group.html">
+<!-- <link rel="import" href="../../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
-<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+ --><link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
 <dom-module id="action-static-tab">
     <template>
-        <style include="iron-flex-alignment"></style>
         <style include="iron-flex"></style>
         <style include="bo-styles">
         :host{
-            --paper-tooltip:{
-                font-size: var(--font-16, 16px);
-            };
+
         }
         .margin-right {
             margin-right: 10px;
         }
         
-        .color-button ,
-        .selector > * {
-            padding: 0;
-        }
-        
-        .color-picker-container .label {
-            font-size: var(--font-16, 16px);
-            color: var(--form-label-color, #777);
-            margin-bottom: var(--form-label-margin, 10px);
-        }
-        
-        .color-picker-container template {
-            display: none;
-        }
-        
-        .color-picker-container .item ,
-        .selector > *{
-            width: 40px;
-            height: 40px;
-        }
         </style>
-        <t-input label="Title" always-float-label class="margin-bottom"></t-input>
-        <t-input label="Content" always-float-label multi-line class="margin-bottom"></t-input>
-        <div class="layout horizontal end row">
-            <t-dropdown always-float-label class="margin-right flex" label="Font">
-                <div>Roboto</div>
-                <div>Open sans</div>
-                <div>San serif</div>
-            </t-dropdown>
-            <t-dropdown always-float-label class="margin-right flex" label="Font Size">
-                <div>12px</div>
-                <div>14px</div>
-                <div>16px</div>
-                <div>18px</div>
-            </t-dropdown>
-            <div class="color-picker-container flex-2">
-                <div class="label">Background Color</div>
-                <iron-selector class="layout horizontal selector" selected="0">
-                    <template is="dom-repeat" items="{{colors}}" as="color">
-                        <div >
-                            <div id="{{color.name}}" class="item" style$="background-color:[[color.code]]"></div>
-                            <paper-tooltip for="[[color.name]]">
-                                [[color.name]]
-                            </paper-tooltip>
-                        </div>
-                    </template>
-                </iron-selector>
-            </div>
+        <div class="row">
+            
+            <section-header label="Ad landing url">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-input label="" no-label-float ></t-input>
         </div>
+        <div class="row">
+            <t-checkbox >Open in new window</t-checkbox>
+        </div>
+        <div class="row"></div>
+        <div class="row">
+            
+            <section-header label="Ad to be dispalayed for product search">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-checkbox-group inline hide-label data='["Both","Hotel","Activity"]' selected-values='[0]'></t-checkbox-group>
+            
+        </div>
+        <div class="row">
+            
+            <section-header label="Ad to be dispalayed for cities">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-multiselect id="multiselect" minimum-input-length="0"></t-multiselect>
+            
+        </div>
+        <div class="row"></div>
     </template>
     <script>
     Polymer({
@@ -90,29 +76,73 @@ Example:
 
         properties: {
 
-            //Pass the colors array to pass
-            colors: {
-                type: Array,
-                value: [{
-                    "code": "#f00",
-                    "name": "red"
-                }, {
-                    "code": "#fff",
-                    "name": "white"
-                }, {
-                    "code": "#000",
-                    "name": "black"
-                }, {
-                    "code": "#fff",
-                    "name": "white1"
-                }, {
-                    "code": "#000",
-                    "name": "black1"
-                }]
-            }
+            
         },
         listeners: {
 
+        },
+
+        ready: function(){
+
+    var comp = this.$.multiselect;
+    comp.select2Hash = {
+        ajax: {
+            url: 'http://www.bookairfare.com/Services/HelperServices/ContentService.svc/search',
+            minimumInputLength: 3,
+            //process request
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    type: 'city'
+                };
+            },
+            //process response
+            processResults: function(data, params) {
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].text = data[i].CityName;
+                    }
+                }
+                return {
+                    results: data
+                };
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        //process list template
+        templateResult: function(result) {
+            if (result.loading) return result.text;
+
+            return result.text;
+        },
+        //process item selection template
+        templateSelection: function(result) {
+            return result.text;
+        }
+    };
+
+    comp.data = [{
+        id: 'Las Vegas',
+        text: 'Las Vegas',
+
+        CityName: "Las Vegas",
+        Code: "LAS",
+        CountryCode: "US",
+        CountryName: "US",
+        selected: 'selected'
+    }, {
+        id: 'Las Cruces',
+        text: 'Las Cruces',
+
+        CityName: "Las Cruces",
+        Code: "LRU",
+        CountryCode: "US",
+        CountryName: "US",
+        
+    } ];
+    comp.createSelect2();
         }
         // observers:[
         // ],

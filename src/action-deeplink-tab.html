@@ -15,74 +15,185 @@ Example:
 -->
 <link rel="import" href="bo-styles.html">
 <link rel="import" href="../../t-input/t-input.html">
+<link rel="import" href="../../t-stepper/t-stepper.html">
 <link rel="import" href="../../t-dropdown/t-dropdown.html">
-<link rel="import" href="../../t-colorpicker/t-colorpicker.html">
+<link rel="import" href="../../t-calendar/t-calendar.html">
+<!-- <link rel="import" href="../../t-colorpicker/t-colorpicker.html">
 <link rel="import" href="../../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
-<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="../../paper-item/paper-item.html"> -->
+<link rel="import" href="section-header.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
 <dom-module id="action-deeplink-tab">
     <template>
         <style include="iron-flex-alignment"></style>
         <style include="iron-flex"></style>
         <style include="bo-styles">
-        :host{
-            --paper-tooltip:{
-                font-size: var(--font-16, 16px);
-            };
-        }
-        .margin-right {
-            margin-right: 10px;
-        }
-        
-        .color-button ,
-        .selector > * {
-            padding: 0;
-        }
-        
-        .color-picker-container .label {
-            font-size: var(--font-16, 16px);
-            color: var(--form-label-color, #777);
-            margin-bottom: var(--form-label-margin, 10px);
-        }
-        
-        .color-picker-container template {
-            display: none;
-        }
-        
-        .color-picker-container .item ,
-        .selector > *{
-            width: 40px;
-            height: 40px;
-        }
+            t-calendar{
+                --input-height:38px;
+            }
+            .medium-width{
+                margin-right: 10px;
+                width: 200px;
+                max-width: 200px;
+            }
+            .selector.small > *{
+                min-width: 100px;
+            }
+            .stepper-row t-dropdown{
+                max-width: 100px;
+            }
+            .additional-option{
+                    font-size: 16px;
+                    color: var(--dark-text);
+                    border-bottom: 1px solid var(--app-border-color,#777);
+                }
+            /*.additional-option[opened]{
+                background: red;
+            }*/
+            .additional-option iron-icon{
+                transition: 0.3s ease transform;
+            }
+            .additional-option[opened] iron-icon{
+                transform: rotate(180deg);
+            }
+            .deeplink{
+                border: 1px solid var(--app-border-color);
+                padding: 10px;
+                height: 50px;
+                background: #f5f5f5;
+                box-sizing: border-box;
+                overflow: auto;
+                -webkit-user-select: all;
+                -moz-user-select: all;
+                -ms-user-select: all;
+                -o-user-select: all;
+                user-select: all;
+            }
         </style>
-        <t-input label="Title" always-float-label class="margin-bottom"></t-input>
-        <t-input label="Content" always-float-label multi-line class="margin-bottom"></t-input>
-        <div class="layout horizontal end row">
-            <t-dropdown always-float-label class="margin-right flex" label="Font">
-                <div>Roboto</div>
-                <div>Open sans</div>
-                <div>San serif</div>
-            </t-dropdown>
-            <t-dropdown always-float-label class="margin-right flex" label="Font Size">
-                <div>12px</div>
-                <div>14px</div>
-                <div>16px</div>
-                <div>18px</div>
-            </t-dropdown>
-            <div class="color-picker-container flex-2">
-                <div class="label">Background Color</div>
-                <iron-selector class="layout horizontal selector" selected="0">
-                    <template is="dom-repeat" items="{{colors}}" as="color">
-                        <div >
-                            <div id="{{color.name}}" class="item" style$="background-color:[[color.code]]"></div>
-                            <paper-tooltip for="[[color.name]]">
-                                [[color.name]]
-                            </paper-tooltip>
-                        </div>
-                    </template>
-                </iron-selector>
+        <div class="row">
+            <section-header label="Generate deeplink by">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <iron-selector selected="{{selectedTab}}" class="selector small">
+                <div>
+                    Specific property
+                </div>
+                <div>
+                    Location
+                </div>
+            </iron-selector>
+        </div>
+        <div class="row">
+            <section-header label="Product type">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <iron-selector selected="{{selectedTab}}" class="selector small">
+                <div>
+                    Hotel
+                </div>
+                <div>
+                    Activity
+                </div>
+            </iron-selector>
+        </div>
+        <div class="row">
+            <section-header label="Search criteria">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <iron-selector selected="{{selectedTab}}" class="selector small">
+                <div>
+                    Absolute
+                </div>
+                <div>
+                    Current Search
+                </div>
+                <div>
+                    Relative
+                </div>
+            </iron-selector>
+        </div>
+
+        <div class="row">
+            <section-header label="Hotel Search criteria">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-input always-float-label label="Destination"></t-input>
+        </div>
+        <div class="row layout horizontal">
+            <t-calendar  class="medium-width" always-float-label label="Check In"></t-calendar>
+            <t-calendar  class="medium-width" always-float-label label="Check out"></t-calendar>
+        </div>
+        <div class="row">
+            <t-stepper class="medium-width" styled always-float-label min="1" max="9" plural-label="Rooms" singular-label="Room"></t-stepper>
+        </div>
+        <div class="row">
+            <section-header label="Room 1" no-tooltip>
+            </section-header>
+            <div class="layout horizontal end stepper-row">
+                <t-stepper class="medium-width" class="flex" styled always-float-label min="1" max="9" plural-label="Adults" singular-label="Adult" secondary-label="(12+ years)" name="adult" id="adult"></t-stepper>
+                <t-stepper class="medium-width" class="flex" styled always-float-label min="1" max="9" plural-label="Children" singular-label="Child" secondary-label="(0-11 years)" name="child" id="child"></t-stepper>
+                <t-dropdown class="flex" label="Child 1 Age" always-float-label>
+                    <div>1 yr</div>
+                    <div>2 yrs</div>
+                    <div>3 yrs</div>
+                </t-dropdown>
             </div>
+        </div>
+        <div class="row">
+            <div class="additional-option layout horizontal center" opened$="{{collapseOpen}}" on-tap="_collapseToggle">
+                <span class="flex">Additional Options</span>
+                <iron-icon icon="expand-more"></iron-icon>
+            </div>
+        </div>
+        <iron-collapse id="collapse" opened="{{collapseOpen}}">
+            <div class="row">
+                <div class="layout horizontal end row">
+                    <t-dropdown class="medium-width" label="Star rating" always-float-label>
+                        <div>1 star</div>
+                        <div>2 stars</div>
+                        <div>3 stars</div>
+                    </t-dropdown>
+                    <t-input class="flex" always-float-label label="Destination"></t-input>
+                </div>
+                <div class="row">
+                    <t-multiselect label="Hotel Chain" id="multiselect" minimum-input-length="0"></t-multiselect>
+                </div>
+            </div>
+        </iron-collapse>
+
+        <div class="row">
+            <section-header label="Ad to be displayed for product search">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-checkbox-group inline hide-label data='["Both","Hotel Only","Activity Only"]' selected-values='[0,1]'></t-checkbox-group>
+        </div>
+
+        <div class="row">
+            <section-header label="Ad to be displayed for cities">
+                <!-- content has to be wrapped by a parent div-->
+                <div>
+                    Rich-text tooltips are doable but against the Material Design spec.</div>
+            </section-header>
+            <t-multiselect id="multiselect1" minimum-input-length="0"></t-multiselect>
+        </div>
+        <div class="row">
+            <a href="" class="link-style">
+                GENERATE DEEPLINK
+            </a>
+        </div>
+        <div class="row">
+            <div class="deeplink font-12">[[generatedUrl]]</div>
         </div>
     </template>
     <script>
@@ -91,29 +202,145 @@ Example:
 
         properties: {
 
-            //Pass the colors array to pass
-            colors: {
-                type: Array,
-                value: [{
-                    "code": "#f00",
-                    "name": "red"
-                }, {
-                    "code": "#fff",
-                    "name": "white"
-                }, {
-                    "code": "#000",
-                    "name": "black"
-                }, {
-                    "code": "#fff",
-                    "name": "white1"
-                }, {
-                    "code": "#000",
-                    "name": "black1"
-                }]
+            //set true from parent
+            collapseOpen:{
+                type:Boolean,
+                value:false
+            },
+
+            //set the generated url in the prop
+            generatedUrl: {
+                type:String,
+                //remove value on working setting to style
+                value:'https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html&active=iron-icons'
             }
         },
         listeners: {
 
+        },
+
+        ready: function(){
+            var comp1 = this.$.multiselect1;
+            comp1.select2Hash = {
+        ajax: {
+            url: 'http://www.bookairfare.com/Services/HelperServices/ContentService.svc/search',
+            minimumInputLength: 3,
+            //process request
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    type: 'city'
+                };
+            },
+            //process response
+            processResults: function(data, params) {
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].text = data[i].CityName;
+                    }
+                }
+                return {
+                    results: data
+                };
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        //process list template
+        templateResult: function(result) {
+            if (result.loading) return result.text;
+
+            return result.text;
+        },
+        //process item selection template
+        templateSelection: function(result) {
+            return result.text;
+        }
+    };
+    comp1.data = [{
+        id: 'Las Vegas',
+        text: 'Las Vegas',
+
+        CityName: "Las Vegas",
+        Code: "LAS",
+        CountryCode: "US",
+        CountryName: "US",
+        selected: 'selected'
+    }, {
+        id: 'Las Cruces',
+        text: 'Las Cruces',
+
+        CityName: "Las Cruces",
+        Code: "LRU",
+        CountryCode: "US",
+        CountryName: "US",
+        
+    } ];
+    comp1.createSelect2();
+    var comp = this.$.multiselect;
+    comp.select2Hash = {
+        ajax: {
+            url: 'http://www.bookairfare.com/Services/HelperServices/ContentService.svc/search',
+            minimumInputLength: 3,
+            //process request
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    type: 'city'
+                };
+            },
+            //process response
+            processResults: function(data, params) {
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].text = data[i].CityName;
+                    }
+                }
+                return {
+                    results: data
+                };
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        //process list template
+        templateResult: function(result) {
+            if (result.loading) return result.text;
+
+            return result.text;
+        },
+        //process item selection template
+        templateSelection: function(result) {
+            return result.text;
+        }
+    };
+
+    comp.data = [{
+        id: 'Las Vegas',
+        text: 'Las Vegas',
+
+        CityName: "Las Vegas",
+        Code: "LAS",
+        CountryCode: "US",
+        CountryName: "US",
+        selected: 'selected'
+    }, {
+        id: 'Las Cruces',
+        text: 'Las Cruces',
+
+        CityName: "Las Cruces",
+        Code: "LRU",
+        CountryCode: "US",
+        CountryName: "US",
+        
+    } ];
+    comp.createSelect2();
+        },
+
+        _collapseToggle: function(){
+            this.$.collapse.toggle();
         }
         // observers:[
         // ],

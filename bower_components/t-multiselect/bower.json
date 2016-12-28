@@ -1,0 +1,28 @@
+{
+  "name": "t-multiselect",
+  "version": "0.1.1",
+  "authors": [
+    "C Venkata Suresh <chindanuruvenkatasuresh@gmail.com>"
+  ],
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "select2": "~4.0.0",
+    "webcomponentsjs": "~0.7.5",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.6",
+    "t-shared-components": "atomelements/t-shared-components#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.6",
+    "web-component-tester": "*"
+  }
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>t-button tests</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../t-multiselect.html">
+</head>
+<body>
+  <t-filter></t-filter>
+  <script>
+  suite('<t-filter>', function() {
+  	test('is present', function() {
+  	  var btn = document.querySelector('t-multiselect');
+      assert.isTrue(Boolean(btn));
+  	});
+  });
+  </script>
+</body>
+</html>

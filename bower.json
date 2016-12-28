@@ -18,7 +18,9 @@
     "t-checkbox-group": "atomelements/t-checkbox-group#^1.0.1",
     "t-button": "atomelements/t-button#^1.2.0",
     "vaadin-upload": "^1.1.1",
-    "t-colorpicker": "atomelements/t-colorpicker#^1.0.1"
+    "t-colorpicker": "atomelements/t-colorpicker#^1.0.1",
+    "t-stepper": "atomelements/t-stepper#^1.1.4",
+    "t-multiselect": "atomelements/t-multiselect#^0.1.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

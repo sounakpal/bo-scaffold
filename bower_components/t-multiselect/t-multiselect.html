@@ -1,0 +1,157 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../t-shared-components/jquery.html">
+<script src="../select2/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="../select2/dist/css/select2.min.css">
+    <style >
+        .select2-container.select2-container--default.select2-container--open{
+            font-family: var(--primary-font-family,sans-serif);
+            color: var(--multiselect-content-color, #777);
+            font-size: var(--multiselect-content-size, 14px);
+        }
+    </style>
+
+<dom-module id="t-multiselect">
+    <style>
+    :host {
+        display: block;
+        box-sizing: border-box;
+        font-family: var(--primary-font-family,sans-serif);
+    }
+    .label{
+        display: block;
+        color: var(--form-label-color,#777);
+        font-size: var(--form-label-size, 16px);
+        margin-bottom: var(--form-label-margin,10px);
+    }
+
+    ::content .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        font-size: var(--multiselect-tag-size,12px);
+        color: var(--multiselect-tag-color,rgba(0,0,0,0.54));
+        padding: 3px 6px;
+        margin-bottom: 5px;
+    }
+    ::content .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        order: 2;
+        margin-right: 0px;
+        margin-left: 4px;
+    }
+    ::content .select2-container .select2-selection--multiple,
+    ::content  .select2-container .select2-selection__choice{
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+
+    }
+    ::content .select2-container--default .select2-selection--multiple,
+    ::content .select2-container--default.select2-container--focus .select2-selection--multiple{
+        border-color: var(--input-border-color,#ccc);
+        min-height: var(--multiselect-height,40px);
+        border-radius: 0;
+    }
+    </style>
+    <template>
+    <template is="dom-if" if="[[label]]">
+        <label class="label">[[label]]</label>
+    </template>
+        <select id="select" style="width: 100%" multiple="multiple">
+            <template is="dom-repeat" items="{{data}}" as="item">
+                <option value="{{item.id}}" selected="{{item.selected}}">{{item.text}}</option>
+            </template>
+        </select>
+    </template>
+<script>
+var sAPI = {
+    ajax: {
+        url: '',
+        dataType: 'json',
+        delay: 500,
+        //process request
+        data: function(params) {
+            return {
+                query: params.term, // search term
+                page: params.page
+            };
+        },
+        //process response
+        processResults: function(data, params) {
+            return {
+                results: data.items
+            };
+        },
+    },
+    tags: true,
+    cache: true,
+    placeholder: '',
+    minimumInputLength: 3,
+    data: [],
+    //process list template
+    templateResult: function(result) {
+        return result.text;
+    },
+    //process item selection template
+    templateSelection: function(result) {
+        return result.text;
+    }
+};
+
+Polymer({
+
+    is: 't-multiselect',
+
+    properties: {
+        //[{id: '', text: ''}]
+        data: {
+            type: Array,
+            value: null
+        },
+
+        placeholder: {
+            type: String,
+            value: ''
+        },
+
+        auto: {
+            type: Boolean,
+            value: false
+        },
+
+        select2Hash: {
+            type: Object,
+            value: function() {
+                return {};
+            }
+        },
+
+
+    },
+
+    ready: function() {
+        if (this.auto) {
+            this.createSelect2();
+        }
+    },
+
+    /*
+    Use when data is fetched from remote source
+     */
+    createSelect2: function() {    		
+        var obj = $(this.$.select).select2(this._getSelect2Hash());
+        console.log('select2 instancec', obj);
+    },
+
+    _getSelect2Hash: function() {
+        var component = this;
+        var sHash = sAPI;
+        sHash = $.extend(sHash, component.select2Hash);
+        sHash.placeholder = component.placeholder;
+
+        return sHash;
+    }
+});
+</script>
+</dom-module>

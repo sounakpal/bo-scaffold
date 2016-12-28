@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>select2-wrapper Demo</title>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../t-multiselect.html">
+    <style>
+        html,body{
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <t-multiselect id="multiselect" label="Enter destination" minimum-input-length="0"></t-multiselect>
+    <t-multiselect id="multiselect1" minimum-input-length="0"></t-multiselect>
+    <script>
+    var comp = document.querySelector('#multiselect');
+    comp.select2Hash = {
+        ajax: {
+            url: 'http://www.bookairfare.com/Services/HelperServices/ContentService.svc/search',
+            minimumInputLength: 3,
+            //process request
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    type: 'city'
+                };
+            },
+            //process response
+            processResults: function(data, params) {
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].text = data[i].CityName;
+                    }
+                }
+                return {
+                    results: data
+                };
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        //process list template
+        templateResult: function(result) {
+            if (result.loading) return result.text;
+
+            return result.text;
+        },
+        //process item selection template
+        templateSelection: function(result) {
+            return result.text;
+        }
+    };
+    var comp1 = document.querySelector('#multiselect1');
+    comp1.select2Hash = {
+        ajax: {
+            url: 'http://www.bookairfare.com/Services/HelperServices/ContentService.svc/search',
+            minimumInputLength: 3,
+            //process request
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    type: 'city'
+                };
+            },
+            //process response
+            processResults: function(data, params) {
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].text = data[i].CityName;
+                    }
+                }
+                return {
+                    results: data
+                };
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        //process list template
+        templateResult: function(result) {
+            if (result.loading) return result.text;
+
+            return result.text;
+        },
+        //process item selection template
+        templateSelection: function(result) {
+            return result.text;
+        }
+    };
+
+    comp.data = [{
+        id: 'Las Vegas',
+        text: 'Las Vegas',
+
+        CityName: "Las Vegas",
+        Code: "LAS",
+        CountryCode: "US",
+        CountryName: "US",
+        selected: 'selected'
+    }, {
+        id: 'Las Cruces',
+        text: 'Las Cruces',
+
+        CityName: "Las Cruces",
+        Code: "LRU",
+        CountryCode: "US",
+        CountryName: "US",
+        
+    } ];
+    comp.createSelect2();
+
+    comp1.data = [{
+        id: 'Las Vegas',
+        text: 'Las Vegas',
+
+        CityName: "Las Vegas",
+        Code: "LAS",
+        CountryCode: "US",
+        CountryName: "US",
+        selected: 'selected'
+    }, {
+        id: 'Las Cruces',
+        text: 'Las Cruces',
+
+        CityName: "Las Cruces",
+        Code: "LRU",
+        CountryCode: "US",
+        CountryName: "US",
+        
+    } ];
+    comp1.createSelect2();
+    //my_select2_element
+    </script>
+</body>
+
+</html>
